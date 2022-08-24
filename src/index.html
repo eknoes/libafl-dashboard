@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LibAFL Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+    <script src="monitor.js" type="application/javascript"></script>
+    <style>
+        #clients > tr:hover {
+            background: lightblue;
+        }
+
+        #clients a {
+            margin-left: 1em;
+        }
+    </style>
+</head>
+<body style="padding: 0em 2em">
+<div class="container">
+    <div class="row">
+        <div class="column column-75">
+            <h3>LibAFL Dashboard</h3>
+        </div>
+        <div class="column column-25" style="text-align: right">
+            <small>Last updated <span id="last-update">0</span></small><br />
+            <small>Received <span id="total-records">0</span> records, failed to parse <span id="failed-records">0</span></small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column column-40">
+            <table>
+                <tr>
+                    <td><b>Runtime:</b></td>
+                    <td id="runtime">Not started</td>
+                </tr>
+                <tr>
+                    <td><b>Objectives:</b></td>
+                    <td id="objectives">0</td>
+                </tr>
+                <tr>
+                    <td><b>Corpus:</b></td>
+                    <td id="corpus">0</td>
+                </tr>
+                <tr>
+                    <td><b>Executions:</b></td>
+                    <td><span id="executions">0</span> (<span id="exec_sec">0</span> exec/s)</td>
+                </tr>
+            </table>
+
+            <div>
+                <h4>Plot</h4><br />
+                <a class="button button-outline" href="#plot-corpus">📈 Corpus Size</a>
+                <a class="button button-outline" href="#plot-execs">📈 Executions</a>
+                <a class="button button-outline" href="#plot-objectives">📈 Objective Size</a>
+            </div>
+        </div>
+        <div class="column column-60">
+                <div id="executions-plot"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column column-50">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Corpus</th>
+                    <th>Objectives</th>
+                    <th>Executions</th>
+                </tr></thead>
+                <tbody id="clients">
+                </tbody>
+            </table>
+        </div>
+        <div class="column column-40 column-offset-10" id="client-overview" style="display: none">
+            <h5>UserStats Client #<span id="client-overview-id">1</span></h5>
+            <ul id="client-overview-user-stats">
+
+            </ul>
+        </div>
+</div>
+</body>
+</html>
