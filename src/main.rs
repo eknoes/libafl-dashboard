@@ -6,10 +6,10 @@ use std::net::TcpListener;
 use std::path::PathBuf;
 use std::str::FromStr;
 use std::sync::mpsc::channel;
-use std::thread;
+use std::{thread};
 use std::time::Duration;
 use tiny_http::{Header, Method, Response, Server};
-use tungstenite::accept;
+use tungstenite::{accept, Error};
 use tungstenite::Message::Text;
 
 #[derive(Parser)]
@@ -102,6 +102,9 @@ fn main() {
                         }
                         Ok(_) => match websocket.write_message(Text(result)) {
                             Ok(_) => (),
+                            Err(Error::Io(_)) => {
+                                break;
+                            },
                             Err(e) => {
                                 eprintln!("Write Error: {:?}", e);
                             }
