@@ -7,21 +7,24 @@ use std::path::PathBuf;
 use std::str::FromStr;
 use std::sync::mpsc::channel;
 use std::thread;
-use std::thread::sleep;
 use std::time::Duration;
 use tiny_http::{Header, Method, Response, Server};
 use tungstenite::accept;
 use tungstenite::Message::Text;
 
 #[derive(Parser)]
-#[clap(name = "LibAFL-Dashboard", version, author = "Sönke Huster")]
+#[clap(name = "LibAFL-Dashboard", version, author = "Sönke Huster", about = "Creates a webdashboard from a LibAFL Logfile")]
 struct Cli {
+    /// Hostname for the websocket
     #[clap(short, long, default_value = "0.0.0.0", required = false)]
     host: String,
+    /// Hostname that is used to access the websocket from the browser
     #[clap(short, long, default_value = "localhost", required = false)]
     external_hostname: String,
+    /// Port for the HTTP server
     #[clap(short, long, default_value = "9999", required = false)]
     port: usize,
+    /// JSON-lines logfile from LibAFL
     #[clap(action)]
     logfile: PathBuf,
 }
