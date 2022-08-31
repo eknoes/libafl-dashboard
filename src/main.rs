@@ -47,10 +47,25 @@ fn main() {
                             "/monitor.js" => Response::from_string(
                                 include_str!("monitor.js")
                                     .replace("{{WSHOST}}", &cli.external_hostname),
-                            )
-                            .with_header(
+                            ).with_header(
                                 Header::from_str(
                                     "Content-Type: Content-Type: text/javascript;charset=UTF-8",
+                                )
+                                    .unwrap(),
+                            ),
+                            "/plotly-basic.min.js" => Response::from_string(
+                                include_str!("plotly-basic.min.js"),
+                            ).with_header(
+                                Header::from_str(
+                                    "Content-Type: Content-Type: text/javascript;charset=UTF-8",
+                                )
+                                    .unwrap(),
+                            ),
+                            "/milligram.min.css" => Response::from_string(
+                                include_str!("milligram.min.css"),
+                            ).with_header(
+                                Header::from_str(
+                                    "Content-Type: Content-Type: text/css;charset=UTF-8",
                                 )
                                 .unwrap(),
                             ),
