@@ -7,6 +7,7 @@ use std::path::PathBuf;
 use std::str::FromStr;
 use std::sync::mpsc::channel;
 use std::{thread};
+use std::thread::sleep;
 use std::time::Duration;
 use tiny_http::{Header, Method, Response, Server};
 use tungstenite::{accept, Error};
@@ -38,7 +39,7 @@ fn main() {
         .name("Webserver".into())
         .spawn(move || {
             let server = Server::http(format!("{}:{}", hostname, &cli.port)).unwrap();
-
+            eprintln!("The server is now reachable at http://{}:{}", hostname, cli.port);
             for request in server.incoming_requests() {
                 match *request.method() {
                     Method::Get => {
@@ -76,6 +77,10 @@ fn main() {
             .spawn(move || {
                 println!("Accepted new Websocket connection");
                 let mut websocket = accept(stream.unwrap()).unwrap();
+                while !logfile.exists() {
+                    println!("Logfile does not yet exist, waiting");
+                    sleep(Duration::from_secs(5));
+                }
                 let file = File::open(&logfile).unwrap();
                 let mut reader = BufReader::new(file);
 
