@@ -135,7 +135,7 @@ function get_user_value(stat) {
     }
 
     let type = Object.keys(stat)[0];
-    if (type === "Number") {
+    if (type === "Number" || type === "String" || type === "Float") {
         return stat[type];
     } else if (type === "Ratio") {
         return parseInt(stat[type][0]) / parseInt(stat[type][1]) * 100;
