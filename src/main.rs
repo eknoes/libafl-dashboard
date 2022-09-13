@@ -25,6 +25,9 @@ struct Cli {
     /// Port for the HTTP server
     #[clap(short, long, default_value = "9999", required = false)]
     port: usize,
+    /// Port for the HTTP server
+    #[clap(short, long, default_value = "9001", required = false)]
+    websocket_port: usize,
     /// JSON-lines logfile from LibAFL
     #[clap(action)]
     logfile: PathBuf,
@@ -46,7 +49,8 @@ fn main() {
                         let response = match request.url() {
                             "/monitor.js" => Response::from_string(
                                 include_str!("monitor.js")
-                                    .replace("{{WSHOST}}", &cli.external_hostname),
+                                    .replace("{{WSHOST}}", &cli.external_hostname)
+                                    .replace("{{WSPORT}}", &cli.websocket_port.to_string()),
                             ).with_header(
                                 Header::from_str(
                                     "Content-Type: Content-Type: text/javascript;charset=UTF-8",
@@ -84,7 +88,7 @@ fn main() {
         .unwrap();
 
     // Websocket Things
-    let server = TcpListener::bind(format!("{}:{}", cli.host, 9001)).unwrap();
+    let server = TcpListener::bind(format!("{}:{}", cli.host, cli.websocket_port)).unwrap();
     for stream in server.incoming() {
         let logfile = cli.logfile.clone();
         thread::Builder::new()

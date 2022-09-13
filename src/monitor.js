@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-    const socket = new WebSocket("ws://{{WSHOST}}:9001");
+    const socket = new WebSocket("ws://{{WSHOST}}:{{WSPORT}}");
 
     socket.onopen = (event) => {
         console.log("Connected");
