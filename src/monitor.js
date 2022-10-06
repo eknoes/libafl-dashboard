@@ -119,7 +119,7 @@ function setLastUpdate(s) {
 
 function format_user_stat(stat) {
     let type = Object.keys(stat)[0];
-    if (type === "Number") {
+    if (type === "Number" || type === "String" || type === "Float") {
         return stat[type];
     } else if (type === "Ratio") {
         return stat[type][0] + "/" + stat[type][1];
