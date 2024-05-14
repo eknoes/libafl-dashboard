@@ -118,11 +118,11 @@ function setLastUpdate(s) {
 }
 
 function format_user_stat(stat) {
-    let type = Object.keys(stat)[0];
+    let type = Object.keys(stat.value)[0];
     if (type === "Number" || type === "String" || type === "Float") {
-        return stat[type];
+        return stat.value[type];
     } else if (type === "Ratio") {
-        return stat[type][0] + "/" + stat[type][1];
+        return stat.value[type][0] + "/" + stat.value[type][1];
     }
 
     console.log(Object.keys(stat));
